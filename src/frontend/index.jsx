@@ -154,7 +154,7 @@ const View = () => {
 
   return (
     <>
-      <Text>User: {userName}</Text>
+      {/* <Text>User: {userName}</Text> */}
       <Text>User's remaining assigned hours this week: {weekHours !== null ? weekHours : 'Loading...'}</Text>
       <Text>User's remaining assigned hours this month: {monthHours !== null ? monthHours : 'Loading...'}</Text>
     </>
