@@ -5,11 +5,6 @@ import Resolver from '@forge/resolver';
 const resolver = new Resolver();
 
 
-// resolver.define('getHoursOfWeek', (req) => {
-//   console.log(req);
-
-//   return '13';
-// });
 resolver.define('getHoursOfWeek', async (req) => {
   const { accountId } = req.payload;
   console.log('=== getHoursOfWeek called ===');
@@ -19,12 +14,12 @@ resolver.define('getHoursOfWeek', async (req) => {
     return 0;
   }
 
-  const jql = `assignee="${accountId}" AND duedate >= startOfWeek() AND duedate <= endOfWeek()`;
+  const jql = `assignee="${accountId}" AND duedate >= startOfWeek() AND duedate <= endOfWeek() AND status in ("To Do", Assigned, "In Progress", "Approved for Code Review", Approved, "Approved for Launch", "Approved for Merge", "On QA", "On Staging", "On Staging 1", "On Staging 2", "On Staging 3", Unassigned)`;
   console.log('JQL query:', jql);
   try {
     // Encode the JQL for URL
     const encodedJql = encodeURIComponent(jql);
-    const url = `/rest/api/3/search?jql=${encodedJql}&fields=originalEstimate`;
+    const url = `/rest/api/3/search?jql=${encodedJql}&fields=timeestimate`;
     
     console.log('Request URL:', url);
     
@@ -36,7 +31,7 @@ resolver.define('getHoursOfWeek', async (req) => {
       },
       body: JSON.stringify({
         jql: jql,
-        fields: ['originalEstimate']
+        fields: ['timeestimate']
       })
     });
     
@@ -49,13 +44,14 @@ resolver.define('getHoursOfWeek', async (req) => {
       return 0;
     }
     console.log('Issues:', data.issues);
-    let totalHours = 0;
+    let totalSeconds = 0;
     data.issues.forEach(issue => {
-      const budgetValue = issue.fields.originalEstimate;
-      if (budgetValue) {
-        totalHours += parseFloat(budgetValue);
+      const estimatedTimeInSeconds = issue.fields.timeestimate;
+      if (estimatedTimeInSeconds) {
+        totalSeconds += parseFloat(estimatedTimeInSeconds);
       }
     });
+      const totalHours = totalSeconds / 3600;
       console.log('Total hours calculated:', totalHours);
       return totalHours;
   } catch (error) {
@@ -63,13 +59,6 @@ resolver.define('getHoursOfWeek', async (req) => {
       return 0;
   }
 });
-
-
-// resolver.define('getHoursOfMonth', (req) => {
-//   console.log(req);
-
-//   return '37';
-// });
 
 resolver.define('getHoursOfMonth', async (req) => {
   const { accountId } = req.payload;
@@ -81,7 +70,7 @@ resolver.define('getHoursOfMonth', async (req) => {
     return 0;
   }
 
-  const jql = `assignee="${accountId}" AND duedate >= startOfMonth() AND duedate <= endOfMonth()`;
+  const jql = `assignee="${accountId}" AND duedate >= startOfMonth() AND duedate <= endOfMonth() AND status in ("To Do", Assigned, "In Progress", "Approved for Code Review", Approved, "Approved for Launch", "Approved for Merge", "On QA", "On Staging", "On Staging 1", "On Staging 2", "On Staging 3", Unassigned)`;
   console.log('JQL query:', jql);
   
   try {
@@ -93,7 +82,7 @@ resolver.define('getHoursOfMonth', async (req) => {
       },
       body: JSON.stringify({
         jql: jql,
-        fields: ['originalEstimate']
+        fields: ['timeestimate']
       })
     });
     
@@ -108,14 +97,14 @@ resolver.define('getHoursOfMonth', async (req) => {
     
     console.log('Number of issues found:', data.issues.length);
     
-    let totalHours = 0;
+    let totalSeconds = 0;
     data.issues.forEach(issue => {
-      const budgetValue = issue.fields.originalEstimate;
-      if (budgetValue) {
-        totalHours += parseFloat(budgetValue);
+      const estimatedTimeInSeconds = issue.fields.timeestimate;
+      if (estimatedTimeInSeconds) {
+        totalSeconds += parseFloat(estimatedTimeInSeconds);
       }
     });
-    
+    const totalHours = totalSeconds / 3600;
     console.log('Total hours calculated:', totalHours);
     return totalHours;
   } catch (error) {

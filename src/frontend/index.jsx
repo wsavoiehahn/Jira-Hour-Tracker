@@ -1,18 +1,17 @@
-import React, {useEffect, useState} from "react";
+import { invoke, view } from "@forge/bridge";
 import ForgeReconciler, {
-  Text,
-  useProductContext,
-  Textfield,
-  Form,
   Button,
-  UserPicker,
-  FormSection,
+  Form,
   FormFooter,
+  FormSection,
   Label,
   RequiredAsterisk,
+  Text,
   useForm,
+  useProductContext,
+  UserPicker
 } from "@forge/react";
-import { invoke, view } from "@forge/bridge";
+import React, { useEffect, useState } from "react";
 const FIELD_NAME = "field-name";
 
 export const Edit = () => {
@@ -156,9 +155,8 @@ const View = () => {
   return (
     <>
       <Text>User: {userName}</Text>
-      {/* <Text>{data ? data : 'Loading...'}</Text> */}
-      <Text>User's Estimated Hours This Week: {weekHours !== null ? weekHours : 'Loading...'}</Text>
-      <Text>User's Estimated Hours This Month: {monthHours !== null ? monthHours : 'Loading...'}</Text>
+      <Text>User's remaining assigned hours this week: {weekHours !== null ? weekHours : 'Loading...'}</Text>
+      <Text>User's remaining assigned hours this month: {monthHours !== null ? monthHours : 'Loading...'}</Text>
     </>
   );
 };
