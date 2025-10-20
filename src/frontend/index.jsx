@@ -15,13 +15,9 @@ import React, { useEffect, useState } from "react";
 const FIELD_NAME = "field-name";
 
 export const Edit = () => {
-  // const { handleSubmit, register, getFieldId } = useForm();
   const { handleSubmit, getFieldId } = useForm();
   const [selectedUser, setSelectedUser] = useState(null);
 
-  // const configureGadget = (data) => {
-  //   view.submit(data);
-  // };
       const configureGadget = (formData = {}) => {
       console.log('=== CONFIGURE GADGET START ===');
       console.log('Form data received:', formData);
@@ -154,7 +150,6 @@ const View = () => {
 
   return (
     <>
-      {/* <Text>User: {userName}</Text> */}
       <Text>User's remaining assigned hours this week: {weekHours !== null ? weekHours : 'Loading...'}</Text>
       <Text>User's remaining assigned hours this month: {monthHours !== null ? monthHours : 'Loading...'}</Text>
     </>
