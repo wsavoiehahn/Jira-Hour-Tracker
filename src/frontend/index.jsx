@@ -60,7 +60,6 @@ export const Edit = () => {
       name={FIELD_NAME}
       onChange={handleUserChange}
       />
-        {/* <Textfield {...register(FIELD_NAME, { required: true })} /> */}
       </FormSection>
       <FormFooter>
         <Button appearance="primary" type="submit">
@@ -75,21 +74,9 @@ const View = () => {
   console.log('=== VIEW COMPONENT RENDER START ===');
   const [weekHours, setWeekHours] = useState(null);
   const [monthHours, setMonthHours] = useState(null);
-  // const [data, setData] = useState(null);
   
   const context = useProductContext();
   console.log('View context:', context);
-  // useEffect(() => {
-  //   console.log('=== VIEW USEEFFECT RUNNING ===');
-  //   // invoke('getText', { example: 'my-invoke-variable' }).then(setData);
-  //   invoke('getHoursOfWeek', { example: 'my-invoke-variable' }).then(setWeekHours).catch(error => console.error('Error getting week hours:', error));
-  //   invoke('getHoursOfMonth', { example: 'my-invoke-variable' }).then(setMonthHours).catch(error => console.error('Error getting month hours:', error));
-  // }, []);
-
-  // if (!context) {
-  //   console.log('View: No context, returning Loading...');
-  //   return "Loading...";
-  // }
 
     useEffect(() => {
     console.log('=== VIEW USEEFFECT RUNNING ===');
